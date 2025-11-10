@@ -1,6 +1,8 @@
 # SynchroChat 🚀
 
 **Proyecto de Sistemas Distribuidos**
+**Realizado por Ruben Alejandro Saldaña Beltran**
+**00000216100**
 
 Este es un prototipo de chat en tiempo real creado con Node.js y WebSockets (`socket.io`). La idea era construir un chat funcional,le dimos un *plus* con una interfaz inspirada en Discord.
 
