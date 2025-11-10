@@ -1,0 +1,361 @@
+/*
+ * -------------------------------------
+ * style.css (EL MAQUILLAJE / EL LOOK)
+ * -------------------------------------
+ * Aquí es donde hacemos que se vea chido.
+ * Usamos modo oscuro, Flexbox y trucos de CSS.
+ */
+
+/* --- 1. Paleta de Colores (:root) ---
+ * Definimos nuestros colores como "variables".
+ * Si queremos cambiar el look, solo cambiamos esto. Super pro.
+ */
+:root {
+    --color-sidebar: #2f3136;
+    --color-main: #36393f;
+    --color-darker: #202225;
+    --color-text-primary: #dcddde;
+    --color-text-secondary: #b9bbbe;
+    --color-interactive: #40444a;
+    --color-interactive-hover: #3a3d42;
+    --color-blue: #007bff;
+}
+
+/* --- 2. Reseteo Básico ---
+   * 'box-sizing: border-box' es el mejor truco de CSS.
+   * Evita que el 'padding' y 'border' nos arruinen los anchos.
+   */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    color: var(--color-text-primary);
+    background-color: var(--color-main);
+    height: 100vh;
+    /* Ocupa el 100% de la altura de la ventana */
+    overflow: hidden;
+    /* Evita que el 'body' tenga scroll. Queremos scroll en el chat, no acá. */
+}
+
+/* --- 3. El Modal de Bienvenida (El "Cadenero") --- */
+#welcome-screen {
+    position: fixed;
+    /* Lo saca del flujo normal */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-darker);
+    display: flex;
+    /* <-- Se muestra por defecto */
+    align-items: center;
+    /* Centrado vertical */
+    justify-content: center;
+    /* Centrado horizontal */
+    z-index: 100;
+    /* Siempre encima de todo */
+}
+
+#welcome-form {
+    background-color: var(--color-sidebar);
+    padding: 30px 40px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* Sombrita pa' que flote */
+}
+
+/* ... (estilos de texto e inputs del modal) ... */
+#welcome-form h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+#welcome-form p {
+    color: var(--color-text-secondary);
+    margin-bottom: 20px;
+}
+
+#welcome-form input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-interactive);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+#welcome-form button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    background-color: var(--color-blue);
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* --- 4. El Contenedor del Chat (La "Fiesta") --- */
+#chat-container {
+    display: none;
+    /* <--- CLAVE: Oculto por defecto */
+    /* El JS lo cambiará a 'display: flex' cuando entres */
+    width: 100%;
+    height: 100%;
+}
+
+/* --- 5. El Layout de 2 Columnas (Flexbox FTW!) --- */
+
+/* 5.1. Columna Izquierda (Sidebar) */
+.sidebar {
+    width: 240px;
+    /* Ancho fijo */
+    background-color: var(--color-sidebar);
+    display: flex;
+    flex-direction: column;
+    /* Apila los elementos (header, contenido, perfil) */
+    flex-shrink: 0;
+    /* Evita que se encoja si no hay espacio */
+}
+
+.sidebar-header {
+    padding: 10px 15px;
+    border-bottom: 1px solid var(--color-darker);
+}
+
+.sidebar-content {
+    flex: 1;
+    /* Ocupa todo el espacio que sobre (empuja el perfil pa' abajo) */
+    padding: 15px;
+    overflow-y: auto;
+    /* Scroll si la lista de usuarios es muy larga */
+}
+
+#user-list-title {
+    color: var(--color-text-secondary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+#user-list {
+    list-style: none;
+}
+
+#user-list li {
+    padding: 5px 0;
+    font-weight: bold;
+}
+
+/* El "Gafete" de perfil abajo */
+.user-profile {
+    padding: 15px;
+    background-color: var(--color-darker);
+    border-top: 1px solid #27292d;
+}
+
+.user-profile label {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    display: block;
+}
+
+#profile-username {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--color-text-primary);
+}
+
+/* 5.2. Columna Derecha (Chat Principal) */
+.main-chat {
+    flex: 1;
+    /* <-- CLAVE: Ocupa "todo el espacio que sobre" */
+    display: flex;
+    flex-direction: column;
+    /* Apila el header, los mensajes y el input */
+    background-color: var(--color-main);
+}
+
+.chat-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid var(--color-darker);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+}
+
+.messages {
+    flex: 1;
+    /* Ocupa el espacio central (empuja el form pa' abajo) */
+    padding: 20px;
+    overflow-y: auto;
+    /* ¡El scroll del chat! */
+}
+
+/* --- 6. Estilos de Mensajes --- */
+
+.chat-message {
+    padding: 8px 0;
+    word-wrap: break-word;
+}
+
+/* Hacemos el nombre de usuario de otro color */
+.chat-message strong {
+    color: var(--color-blue);
+    margin-right: 5px;
+}
+
+/* Mensajes del sistema (Ej. "Juan se unió") */
+.system-message {
+    font-style: italic;
+    color: var(--color-text-secondary);
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* --- 7. Animación de Emojis (EL PUNTO EXTRA) --- */
+
+/* 1. Definimos la animación "bounce" (brinco) */
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-30px);
+    }
+
+    /* El "brinco" más alto */
+    60% {
+        transform: translateY(-15px);
+    }
+}
+
+/* 2. La clase que el JS le pondrá al mensaje */
+.emoji-message {
+    animation: bounce 0.8s;
+    /* Aplica la animación */
+    font-size: 3rem;
+    /* Emojis gigantes */
+    background-color: transparent;
+}
+
+/* Truquito pa' que el nombre de usuario no sea gigante */
+.emoji-message strong {
+    display: block;
+    /* El nombre va arriba del emoji */
+    font-size: 1rem;
+    /* Tamaño normal */
+    margin-bottom: 5px;
+}
+
+/* --- 8. El Formulario de Envío (Abajo) --- */
+
+.chat-form {
+    display: flex;
+    padding: 20px;
+    background-color: var(--color-main);
+    position: relative;
+    /* <-- CLAVE: Para que el emoji-picker "flote" encima */
+}
+
+#message-input {
+    flex: 1;
+    /* Ocupa el espacio */
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-interactive);
+    color: var(--color-text-primary);
+    font-size: 1rem;
+}
+
+#message-input:focus {
+    outline: none;
+    background-color: var(--color-interactive-hover);
+}
+
+/* Estilos de los botones (Enviar y Emoji) */
+#message-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--color-blue);
+    color: white;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#emoji-button {
+    /* Estilo diferente pa'l botón de emoji */
+    padding: 10px 15px;
+    background-color: var(--color-interactive);
+    margin-left: 5px;
+    font-size: 1.1rem;
+}
+
+#emoji-button:hover {
+    background-color: var(--color-interactive-hover);
+}
+
+/* --- 9. El Panel de Emojis (El truco) --- */
+emoji-picker {
+    position: absolute;
+    /* ¡FLOTA! */
+    bottom: 100%;
+    /* Justo encima de su papá (el .chat-form) */
+    right: 20px;
+    display: none;
+    /* <-- Oculto por defecto */
+}
+
+/* El JS le pone esta clase al picker para mostrarlo */
+emoji-picker.visible {
+    display: block;
+}
+
+/* --- 10. Diseño Responsivo (Pa' que se vea bien en el cel) --- */
+/* (RETO ADICIONAL) */
+@media (max-width: 768px) {
+    /* Si la pantalla es más chica que 768px... */
+
+    /* 1. Apilamos las columnas (sidebar encima del chat) */
+    #chat-container {
+        flex-direction: column;
+    }
+
+    /* 2. La sidebar ya no es angosta, ocupa todo el ancho */
+    .sidebar {
+        width: 100%;
+        height: 40vh;
+        /* Ocupa el 40% de la altura del cel */
+    }
+
+    /* 3. El chat ocupa el resto de la altura */
+    .main-chat {
+        height: 60vh;
+    }
+
+    /* 4. No hay espacio pa'l header, lo quitamos */
+    .chat-header {
+        display: none;
+    }
+
+    /* 5. Ajustamos el picker pa' que no se salga */
+    emoji-picker {
+        right: 5px;
+    }
+}

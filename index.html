@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>SynchroChat</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+</head>
+
+<body>
+
+    <div id="welcome-screen">
+        <form id="welcome-form">
+            <h3>Bienvenido a SynchroChat</h3>
+            <p>Elige tu nickname para entrar</p>
+            <input type="text" id="username-input" placeholder="Tu nickname" autocomplete="off" required>
+            <button type="submit">Entrar al Chat</button>
+        </form>
+    </div>
+
+    <div id="chat-container">
+
+        <div class="sidebar" id="user-list-container">
+
+            <div class="sidebar-header">
+                <h3>SynchroChat 🚀</h3>
+            </div>
+
+            <div class="sidebar-content">
+                <h4 id="user-list-title">Conectados (0)</h4>
+                <ul id="user-list">
+                </ul>
+            </div>
+
+            <div class="user-profile">
+                <label>Tu Perfil:</label>
+                <span id="profile-username">...</span>
+            </div>
+        </div>
+
+        <div class="main-chat">
+
+            <div class="chat-header">
+                <h2># general</h2>
+            </div>
+
+            <div class="messages" id="chat-area">
+            </div>
+
+            <form class="chat-form" id="message-form">
+
+                <emoji-picker></emoji-picker>
+
+                <input type="text" id="message-input" placeholder="Escribe un mensaje..." autocomplete="off">
+
+                <button type="button" id="emoji-button">🥳</button> <button type="submit">Enviar</button>
+            </form>
+        </div>
+
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
